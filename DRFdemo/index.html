@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRF的首页</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1>数据输出为：</h1>
+            <div id="header">
+
+            </div>
+        </div>
+    </div>
+    <button id="btn" type="button" class="btn btn-primary">请求数据</button>
+</body>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+<script>
+    $(function(){
+        $('#btn').click(function(){
+            $.ajax({
+                type:'get',
+                url:"http://127.0.0.1:8000/user/",
+                dataType:'json',
+                success:function(data){
+                    console.log(data)
+                    for(var i = 0;i<data.length;i++){
+                        $("#header").html(data[i].username)
+                    }
+                },
+                error:function(XMHttpResponse,textStatus,errorThrown){
+                    console.log("1 异步调用返回失败，XMLHttpResponse.readyState:"+XMHttpResponse.readyState);
+                    console.log("2 异步调用返回失败，XMLHttpResponse.status:"+XMHttpResponse.status);
+                    console.log("3 异步调用返回失败，textStatus:"+textStatus);
+                    console.log("4 异步调用返回失败，errorThrown:"+errorThrown);
+                }
+            })
+        })
+    })
+</script>
+</html>
